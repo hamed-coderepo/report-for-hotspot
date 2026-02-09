@@ -5,3 +5,6 @@ db.sqlite3
 db.sqlite3-journal
 db.sqlite3-wal
 db.cache.sqlite3
+db_cache.sqlite3
+db_cache.sqlite3-journal
+db_cache.sqlite3-wal
