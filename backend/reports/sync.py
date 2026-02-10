@@ -89,7 +89,7 @@ def _parse_sources():
     }]
 
 
-def _fetch_maria_rows(source, limit=0, days=None):
+def _fetch_maria_rows(source, limit=0, days=None, start_date=None, end_date=None):
     logger.info("Sync: fetching rows from %s (%s:%s/%s)", source.get('name'), source.get('host'), source.get('port'), source.get('db'))
     query = """
 SELECT
@@ -106,8 +106,8 @@ SELECT
         ELSE ROUND(COALESCE(NULLIF(Hse.STrA, 0), NULLIF(Hse.MTrA, 0), NULLIF(Hse.DTrA, 0), NULLIF(Hse.YTrA, 0), NULLIF(Hse.ExtraTraffic, 0)) / 1073741824, 2)
     END AS Package,
     TName.ServiceStatus AS ServiceStatus,
-    DATE_FORMAT(NULLIF(TName.StartDate, '0000-00-00'), '%Y-%m-%d') AS StartDate,
-    DATE_FORMAT(NULLIF(TName.EndDate, '0000-00-00'), '%Y-%m-%d') AS EndDate
+    DATE_FORMAT(NULLIF(TName.StartDate, '0000-00-00'), '%%Y-%%m-%%d') AS StartDate,
+    DATE_FORMAT(NULLIF(TName.EndDate, '0000-00-00'), '%%Y-%%m-%%d') AS EndDate
 FROM Huser_servicebase TName
 JOIN Huser Hu ON TName.User_Id = Hu.User_Id
 LEFT JOIN Hreseller Hrc ON TName.Creator_Id = Hrc.Reseller_Id
@@ -115,13 +115,23 @@ LEFT JOIN Hservice Hse ON TName.Service_Id = Hse.Service_Id
 """
 
     filters = []
+    params = []
     if days is not None:
         try:
             days_val = int(days)
         except (TypeError, ValueError):
             days_val = 0
         if days_val > 0:
-            filters.append(f"TName.CDT >= DATE_SUB(CURDATE(), INTERVAL {days_val} DAY)")
+            filters.append("TName.CDT >= DATE_SUB(CURDATE(), INTERVAL %s DAY)")
+            params.append(days_val)
+
+    if start_date:
+        filters.append("TName.CDT >= %s")
+        params.append(start_date)
+
+    if end_date:
+        filters.append("TName.CDT <= %s")
+        params.append(end_date)
 
     if filters:
         query += "\nWHERE " + " AND ".join(filters)
@@ -141,7 +151,7 @@ LEFT JOIN Hservice Hse ON TName.Service_Id = Hse.Service_Id
     )
     try:
         with conn.cursor() as cur:
-            cur.execute(query)
+            cur.execute(query, params)
             rows = cur.fetchall()
             df = pd.DataFrame(rows)
             if not df.empty:
@@ -167,6 +177,40 @@ LEFT JOIN Hservice Hse ON TName.Service_Id = Hse.Service_Id
             return df
     except Exception:
         logger.exception("Sync: failed to fetch rows from %s", source.get('name'))
+        raise
+    finally:
+        conn.close()
+
+
+def _fetch_reseller_map(source):
+    logger.info("Sync: fetching reseller map from %s", source.get('name'))
+    query = """
+SELECT Reseller_Id, ResellerName
+FROM Hreseller
+WHERE ResellerName IS NOT NULL AND ResellerName <> ''
+"""
+    conn = pymysql.connect(
+        host=source['host'],
+        port=source['port'],
+        user=source['user'],
+        password=source['password'],
+        db=source['db'],
+        charset='utf8mb4',
+        cursorclass=DictCursor,
+    )
+    try:
+        with conn.cursor() as cur:
+            cur.execute(query)
+            rows = cur.fetchall()
+            df = pd.DataFrame(rows)
+            if df.empty:
+                return df
+            df['creator_norm'] = df['ResellerName'].astype(str).str.strip().str.lower()
+            df['rs_userid'] = df['Reseller_Id']
+            df['rs_name'] = source.get('name')
+            return df[['creator_norm', 'rs_userid', 'rs_name']]
+    except Exception:
+        logger.exception("Sync: failed to fetch reseller map from %s", source.get('name'))
         raise
     finally:
         conn.close()

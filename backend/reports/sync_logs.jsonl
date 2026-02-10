@@ -82,3 +82,6 @@
 {"ts": "2026-02-08T10:02:32.063762+00:00", "type": "source_start", "message": "Fetching rows from source", "data": {"source": "hotspot3", "host": "103.161.237.218", "db": "deltasib"}}
 {"ts": "2026-02-08T10:05:43.342656+00:00", "type": "source_success", "message": "Fetched rows from source", "data": {"source": "hotspot3", "rows": 944422}}
 {"ts": "2026-02-08T10:06:42.874940+00:00", "type": "sync_loaded", "message": "Loaded rows into BigQuery", "data": {"rows": 1645400, "table_id": "frsphotspots.HSP.report_user_service", "auto": true}}
+{"ts": "2026-02-10T09:26:26.988833+00:00", "type": "backfill_start", "message": "Starting report_user_service backfill", "data": {"target_table": "frsphotspots.HSP.report_user_service", "hsp_table": "frsphotspots.HSP.hspdata", "cutoff_date": "2025-10-31"}}
+{"ts": "2026-02-10T09:27:37.951265+00:00", "type": "backfill_start", "message": "Starting report_user_service backfill", "data": {"target_table": "frsphotspots.HSP.report_user_service", "hsp_table": "frsphotspots.HSP.hspdata", "cutoff_date": "2025-10-31"}}
+{"ts": "2026-02-10T09:33:28.964724+00:00", "type": "backfill_success", "message": "Backfill completed", "data": {"target_table": "frsphotspots.HSP.report_user_service"}}
