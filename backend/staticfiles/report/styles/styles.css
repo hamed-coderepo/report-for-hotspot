@@ -46,6 +46,14 @@
 }
 
 @media (max-width: 768px) {
+        .sidebar {
+            display: none;
+        }
+
+        .sidebar.is-open {
+            display: flex;
+        }
+
     :root {
         --fs-h2: 1.2rem;
         --fs-h3: 1rem;
@@ -70,6 +78,26 @@ body {
     font-family: var(--font-vazir);
     direction: rtl;
     font-size: var(--fs-body);
+}
+
+.mobile-menu-btn {
+    display: none;
+}
+
+.mobile-topbar {
+    display: none;
+}
+
+.input-rich {
+    min-height: 3rem;
+    max-height: 12rem;
+    resize: vertical;
+    line-height: 1.6;
+    transition: min-height var(--transition-base), box-shadow var(--transition-fast), border-color var(--transition-fast);
+}
+
+.input-rich:focus {
+    min-height: 8rem;
 }
 
 ::-webkit-scrollbar {
@@ -195,6 +223,22 @@ body {
     background-color: var(--secondary);
 }
 
+.nav-link-create {
+    background: linear-gradient(135deg, #1fd1a2 0%, #49c0ff 100%);
+    color: #03211f;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 10px 20px -10px rgba(31, 209, 162, 0.6);
+    font-weight: 600;
+}
+
+.nav-link-create .nav-icon {
+    color: #03211f;
+}
+
+.nav-link-create:hover {
+    background: linear-gradient(135deg, #23d8a8 0%, #5bc9ff 100%);
+}
+
 /* ========================================
    MAIN CONTENT
    ======================================== */
@@ -224,6 +268,43 @@ body {
     border: 1px solid var(--border-color);
     padding-bottom: 1rem;
     background-color: var(--card-bg);
+}
+
+.mobile-menu-btn {
+    display: none;
+}
+
+.header-text {
+    text-align: right;
+    direction: rtl;
+}
+
+.header-desktop {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.header-mobile {
+    display: none;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+@media (min-width: 1025px) {
+    .header {
+        justify-content: flex-start;
+    }
+
+    .header-desktop {
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    .header-mobile,
+    #mobile-toggle {
+        display: none !important;
+    }
 }
 
 .header-title {
@@ -588,6 +669,229 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     color: var(--text-main);
 }
 
+/* ========================================
+   CREATE PACKAGE (FIGMA-INSPIRED)
+   ======================================== */
+.main-content.package-page {
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px;
+}
+
+.package-page .container {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin: 0 auto;
+}
+
+.package-page .row {
+    display: flex;
+    flex-direction: column;
+.package-page .select-text {
+    font-size: 15px;
+    color: var(--text-main);
+}
+
+.package-page .btn-action {
+    background-color: var(--secondary);
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    color: #ffffff;
+    height: 48px;
+    border-radius: 10px;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 149px;
+    font-family: var(--font-vazir);
+    font-size: 15px;
+}
+
+.package-page .btn-action:hover {
+    background-color: var(--secondary-hover);
+}
+
+.package-page .btn-action:active {
+    transform: scale(0.95);
+}
+
+.package-page .actions-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 12px;
+    width: 100%;
+}
+
+.package-page .error-card {
+    border-color: rgba(255, 255, 255, 0.13);
+}
+
+.package-page .error-content {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.package-page .error-header {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #ec221f;
+    font-size: 16px;
+}
+
+.package-page .error-text {
+    color: #ec221f;
+    font-size: 16px;
+}
+
+.package-page .icon {
+    width: 24px;
+    height: 24px;
+    stroke-width: 1.5;
+}
+
+.package-page .icon-sm {
+    width: 20px;
+    height: 20px;
+}
+
+.package-page .mt-10 {
+    margin-top: 10px;
+}
+
+.package-page .mb-5 {
+    margin-bottom: 5px;
+}
+
+/* ========================================
+   CREATE PACKAGE PAGE
+   ======================================== */
+.package-card {
+    background: #171717;
+    border-radius: 20px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+}
+
+.package-section-title {
+    font-size: 16px;
+    color: #ffffff;
+    padding-bottom: 5px;
+}
+
+.package-subtitle {
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.package-row {
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.package-input,
+.package-select {
+    flex: 1 1 220px;
+    min-height: 48px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    background: var(--secondary);
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.package-input-field {
+    background: transparent;
+    border: none;
+    outline: none;
+    width: 100%;
+    height: 100%;
+    color: var(--text-main);
+    font-size: 15px;
+    font-family: var(--font-vazir);
+}
+
+.package-input-field::placeholder {
+    color: var(--text-muted);
+}
+
+.package-select {
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.package-select-text {
+    font-size: 15px;
+    color: var(--text-muted);
+}
+
+.package-select-icon {
+    font-size: 20px;
+    color: var(--text-main);
+}
+
+.package-action-row {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-top: 8px;
+}
+
+.package-primary-btn {
+    height: 48px;
+    border-radius: 10px;
+    padding: 0 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    background: var(--secondary);
+    color: #ffffff;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-family: var(--font-vazir);
+    font-size: 15px;
+}
+
+.package-primary-btn:hover {
+    background: var(--secondary-hover);
+}
+
+.package-primary-btn:active {
+    transform: scale(0.98);
+}
+
+.package-primary-btn.is-secondary {
+    width: 149px;
+}
+
+.package-select.is-wide {
+    flex: 1 1 320px;
+}
+
+@media (max-width: 900px) {
+    .package-row {
+        flex-direction: column;
+    }
+
+    .package-primary-btn.is-secondary {
+        width: 100%;
+    }
+}
+
 @media (max-width: 850px) {
     .summary-section-wrapper {
         flex: 0 0 100%;
@@ -627,13 +931,42 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 @media (max-width: 1024px) {
+    .header-desktop {
+        display: none;
+    }
+
+    .header-mobile {
+        display: flex;
+    }
+
+        .mobile-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 0.75rem;
+        }
     .mobile-menu-trigger {
         display: flex;
         align-items: center;
         justify-content: center;
     }
 
+    .mobile-menu-btn {
+        display: inline-flex;
+        height: 2.5rem;
+        width: 2.5rem;
+        align-items: center;
+        justify-content: center;
+        border-radius: 9999px;
+        border: 1px solid var(--border-color);
+        background-color: var(--card-bg);
+        color: var(--text-main);
+        cursor: pointer;
+        flex-shrink: 0;
+    }
+
     .sidebar {
+        display: none;
         position: fixed;
         top: 0;
         right: 0;
@@ -646,6 +979,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     }
 
     .sidebar.is-open {
+        display: flex;
         transform: translateX(0);
         align-items: flex-start;
     }
@@ -681,10 +1015,31 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         --fs-small: 0.75rem;
     }
 
+    body {
+        overflow: auto;
+    }
+
+    .layout-wrapper {
+        height: auto;
+        min-height: 100dvh;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
+    .sidebar.is-open {
+        display: flex;
+    }
+
     .main-content,
-    .header,
-    .filter-card {
+    .header {
         padding: 1rem;
+    }
+
+    .filter-card {
+        padding: 0.75rem;
+        margin-bottom: 1rem;
     }
 
     .input-main,
@@ -699,6 +1054,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         width: 100%;
         gap: 0.5rem;
         flex-wrap: wrap;
+        flex-direction: column;
+        align-items: stretch;
     }
 
     .input-container-flex,
@@ -710,6 +1067,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     .select-ui {
         flex: 1 1 auto;
         min-width: 100px;
+        width: 100%;
+        justify-content: space-between;
     }
 
     .actions-bar {
@@ -729,13 +1088,89 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         padding: 0.75rem 0.5rem;
     }
 
+    .summary-flex-container {
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
+
+    .summary-section-wrapper {
+        min-width: 0;
+    }
+
+    .table-wrap {
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .data-table {
+        min-width: 600px;
+    }
+
     input[type="date"]::before {
         display: none !important;
         content: "" !important;
     }
 
+    .dynamic-input[type="date"] {
+        min-width: 0;
+        width: 100%;
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+
+    .dynamic-input[type="date"]::-webkit-datetime-edit,
+    .dynamic-input[type="date"]::-webkit-datetime-edit-fields-wrapper {
+        width: 100%;
+    }
+
+    .header {
+        gap: 0.75rem;
+    }
+
     input[type="date"]:invalid::-webkit-datetime-edit {
         color: transparent !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .filter-card {
+        padding: 0.6rem;
+    }
+    .filter-row {
+        gap: 0.75rem;
+    }
+
+    .select-ui {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .filter-dropdown-menu {
+        width: 100%;
+        min-width: 160px;
+        right: 0;
+        left: auto;
+    }
+
+    .range-container {
+        flex-direction: column;
+    }
+
+    .actions-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn-base,
+    .dropdown-wrapper {
+        flex: 1 1 100%;
+        width: 100%;
+    }
+
+    .dropdown-menu {
+        right: 0;
+        left: auto;
+        width: 100%;
+        min-width: 180px;
     }
 }
 
@@ -749,6 +1184,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
    FIX: Desktop Overlay Removal
    ======================================== */
 @media (min-width: 1025px) {
+    #mobile-toggle {
+        display: none !important;
+    }
+
     .sidebar-overlay {
         display: none !important;
         visibility: hidden !important;

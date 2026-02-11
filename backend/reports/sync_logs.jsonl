@@ -85,3 +85,15 @@
 {"ts": "2026-02-10T09:26:26.988833+00:00", "type": "backfill_start", "message": "Starting report_user_service backfill", "data": {"target_table": "frsphotspots.HSP.report_user_service", "hsp_table": "frsphotspots.HSP.hspdata", "cutoff_date": "2025-10-31"}}
 {"ts": "2026-02-10T09:27:37.951265+00:00", "type": "backfill_start", "message": "Starting report_user_service backfill", "data": {"target_table": "frsphotspots.HSP.report_user_service", "hsp_table": "frsphotspots.HSP.hspdata", "cutoff_date": "2025-10-31"}}
 {"ts": "2026-02-10T09:33:28.964724+00:00", "type": "backfill_success", "message": "Backfill completed", "data": {"target_table": "frsphotspots.HSP.report_user_service"}}
+{"ts": "2026-02-11T05:39:25.742348+00:00", "type": "window_sync_start", "message": "Starting windowed sync", "data": {"target_table": "frsphotspots.HSP.report_user_service", "start_date": "2025-10-31", "end_date": null, "limit": 0}}
+{"ts": "2026-02-11T05:39:39.229115+00:00", "type": "window_source_success", "message": "Fetched rows from source", "data": {"source": "sib_ghor", "rows": 115524}}
+{"ts": "2026-02-11T05:40:15.270622+00:00", "type": "window_source_success", "message": "Fetched rows from source", "data": {"source": "hotspot2", "rows": 151213}}
+{"ts": "2026-02-11T05:41:38.959447+00:00", "type": "window_source_success", "message": "Fetched rows from source", "data": {"source": "hotspot3", "rows": 334381}}
+{"ts": "2026-02-11T05:42:10.277443+00:00", "type": "window_sync_success", "message": "Windowed sync completed", "data": {"rows": 601118}}
+{"ts": "2026-02-11T06:05:44.318799+00:00", "type": "window_sync_start", "message": "Starting windowed sync", "data": {"target_table": "frsphotspots.HSP.report_user_service", "start_date": "2025-10-31", "end_date": null, "limit": 0}}
+{"ts": "2026-02-11T06:06:14.548454+00:00", "type": "window_sync_start", "message": "Starting windowed sync", "data": {"target_table": "frsphotspots.HSP.report_user_service", "start_date": "2025-10-31", "end_date": null, "limit": 0}}
+{"ts": "2026-02-11T06:06:27.876655+00:00", "type": "window_source_success", "message": "Fetched rows from source", "data": {"source": "RS01", "rows": 115552}}
+{"ts": "2026-02-11T06:06:58.732459+00:00", "type": "window_source_success", "message": "Fetched rows from source", "data": {"source": "RS02", "rows": 151255}}
+{"ts": "2026-02-11T06:07:48.829187+00:00", "type": "window_source_success", "message": "Fetched rows from source", "data": {"source": "RS03", "rows": 334540}}
+{"ts": "2026-02-11T06:07:51.387019+00:00", "type": "window_stage_create", "message": "Created stage table id", "data": {"stage_table": "frsphotspots.HSP.report_user_service_stage_c0368518fea14350a1f58dab88a6483f"}}
+{"ts": "2026-02-11T06:08:22.994838+00:00", "type": "window_sync_success", "message": "Windowed sync completed", "data": {"rows": 601347}}

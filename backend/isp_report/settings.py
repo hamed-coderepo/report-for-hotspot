@@ -11,6 +11,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'dev-secret-for-local-testing')
 
 DEBUG = os.getenv('DJANGO_DEBUG', '1') == '1'
+DB_ENGINE = os.getenv('DB_ENGINE', 'sqlite').strip().lower()
+DB_DRIVER = os.getenv('DB_DRIVER', 'mysqlclient').strip().lower()
+
+if DB_ENGINE == 'mysql' and DB_DRIVER == 'pymysql':
+    import pymysql
+
+    pymysql.install_as_MySQLdb()
 
 def _split_env_list(value, default=None):
     if not value:
@@ -63,22 +70,42 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'isp_report.wsgi.application'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+def _mysql_db(name_env, default_name, user_env='DB_USER', pass_env='DB_PASSWORD'):
+    return {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.getenv(name_env, default_name),
+        'USER': os.getenv(user_env, os.getenv('DB_USER', '')),
+        'PASSWORD': os.getenv(pass_env, os.getenv('DB_PASSWORD', '')),
+        'HOST': os.getenv('DB_HOST', '127.0.0.1'),
+        'PORT': int(os.getenv('DB_PORT', '3306')),
         'OPTIONS': {
-            'timeout': 30,
+            'charset': 'utf8mb4',
         },
-    },
-    'cache': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db_cache.sqlite3',
-        'OPTIONS': {
-            'timeout': 30,
+    }
+
+
+if DB_ENGINE == 'mysql':
+    DATABASES = {
+        'default': _mysql_db('DB_NAME', 'isp_report_main'),
+        'cache': _mysql_db('CACHE_DB_NAME', 'isp_report_cache', 'CACHE_DB_USER', 'CACHE_DB_PASSWORD'),
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+            'OPTIONS': {
+                'timeout': 30,
+            },
         },
-    },
-}
+        'cache': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db_cache.sqlite3',
+            'OPTIONS': {
+                'timeout': 30,
+            },
+        },
+    }
 
 DATABASE_ROUTERS = ['isp_report.db_routers.MariaCacheRouter']
 

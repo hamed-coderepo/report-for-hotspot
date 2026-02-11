@@ -270,6 +270,43 @@ body {
     background-color: var(--card-bg);
 }
 
+.mobile-menu-btn {
+    display: none;
+}
+
+.header-text {
+    text-align: right;
+    direction: rtl;
+}
+
+.header-desktop {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.header-mobile {
+    display: none;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+@media (min-width: 1025px) {
+    .header {
+        justify-content: flex-start;
+    }
+
+    .header-desktop {
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    .header-mobile,
+    #mobile-toggle {
+        display: none !important;
+    }
+}
+
 .header-title {
     font-size: var(--fs-h2);
     font-weight: 700;
@@ -894,6 +931,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 @media (max-width: 1024px) {
+    .header-desktop {
+        display: none;
+    }
+
+    .header-mobile {
+        display: flex;
+    }
+
         .mobile-topbar {
             display: flex;
             align-items: center;
